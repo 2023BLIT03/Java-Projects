@@ -4,6 +4,7 @@ import java.util.Scanner;
 public class Main{
     final static Scanner sc = new Scanner(System.in);
     static char[][] arr;
+    static int count;
 
     public static void main(String[] args){
         System.out.print("Enter the number of rows:\n> ");
@@ -17,6 +18,7 @@ public class Main{
             System.out.print("""
                     1. Show the seats
                     2. Buy a ticket
+                    3. Statistics
                     0. Exit""");
             System.out.print("\n> ");
             option = sc.nextInt();
@@ -25,21 +27,14 @@ public class Main{
                 showSeats(r, s);
             } else if(option == 2){
                 book();
-            }else if(option > 2 || option < 0){
+            }else if(option == 3){
+                statistics(r, s);
+            }
+            else if(option > 2 || option < 0){
                 System.out.println("Invalid Number");
             }
         }while(option != 0);
-        /*
-        System.out.println("Total income:");
-        if(r * s <= 60){
-            ticket(r,s);
-        }else if(r % 2 == 0){
-            ticketEven(r, s);
-        }else{
-            ticketOdd(r, s);
-        }
-        seatingPlan(r, s);
-         */
+
     }
 
     static void plan(int r, int s){
@@ -79,22 +74,46 @@ public class Main{
             System.out.println("That ticket has already been purchased!");
         }else{
             arr[row_num-1][seat_num-1] = 'B';
+            count++;
         }
     }
 
-    static void ticket(int r, int s){
+    static int totalIncome(int r, int s){
+        if(r * s <= 60){
+             return ticket(r,s);
+        }else if(r % 2 == 0){
+            return ticketEven(r, s);
+        }else{
+            return ticketOdd(r, s);
+        }
+    }
+
+    static void statistics(int r, int s){
+        System.out.println("Number of purchased tickets: "+ count);
+        double per = ((double) count /(r*s)*100);
+        System.out.printf("Percentage: %.2f%%\n", per);
+        System.out.println("Current income: $" + 10 * count);
+        System.out.println("Total income: $"+totalIncome(r, s));
+    }
+
+    static int ticket(int r, int s){
         int income = r*s*10;
-        System.out.println("$"+income);
+        //System.out.println("$"+income);
+        return income;
     }
 
-    static void ticketEven(int r, int s){
+    static int ticketEven(int r, int s){
         int income = (r/2 * s * 10) + (r/2 * s * 8);
-        System.out.println("$"+income);
+        //System.out.println("$"+income);
+        return income;
+
     }
 
-    static void ticketOdd(int r, int s){
+    static int ticketOdd(int r, int s){
         int income = (r/2 * s * 10) + ((r/2+1) * s * 8);
-        System.out.println("$"+income);
+        //System.out.println("$"+income);
+        return income;
+
     }
 
     static void ticketPrice(){
