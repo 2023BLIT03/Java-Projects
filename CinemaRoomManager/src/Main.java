@@ -1,13 +1,17 @@
 import java.util.Scanner;
 
+
 public class Main{
     final static Scanner sc = new Scanner(System.in);
+    static char[][] arr;
 
     public static void main(String[] args){
         System.out.print("Enter the number of rows:\n> ");
         int r = sc.nextInt();
         System.out.print("Enter the number of seats in each row:\n> ");
         int s = sc.nextInt();
+        System.out.println();
+        plan(r, s);
         int option;
         do{
             System.out.print("""
@@ -16,11 +20,11 @@ public class Main{
                     0. Exit""");
             System.out.print("\n> ");
             option = sc.nextInt();
+            System.out.println();
             if(option == 1){
-                seatingPlan(r, s);
+                showSeats(r, s);
             } else if(option == 2){
-                book(r, s);
-                ticketPrice();
+                book();
             }else if(option > 2 || option < 0){
                 System.out.println("Invalid Number");
             }
@@ -38,48 +42,44 @@ public class Main{
          */
     }
 
-    static void seatingPlan(int r, int s){
-        System.out.println("Cinema:");
+    static void plan(int r, int s){
+        arr = new char[r][s];
+        for(int i=0; i<r; i++){
+            for(int j=0; j<s; j++){
+                arr[i][j] = 'S';
+            }
+        }
+    }
+    static void showSeats(int r, int s){
+
+        System.out.println("Cinema");
         System.out.print("  ");
-        for(int i = 1; i <= s; i++){
+        for(int i=1; i<=arr[0].length; i++){
             System.out.print(i+" ");
         }
         System.out.println();
-        for(int i = 1; i <= r; i++){
-            System.out.print(i+" ");
-            for(int j = 1; j <= s; j++){
-                System.out.print("S ");
+        for(int i=0; i<r; i++){
+            System.out.print((i+1)+" ");
+            for(int j=0; j<s; j++){
+                System.out.print(arr[i][j]+" ");
             }
             System.out.println();
-        }
-    }
-
-    static void newSeatingPlan(int r, int s, int row_num, int seat_num){
-        System.out.println("Cinema:");
-        System.out.print("  ");
-        for(int i = 1; i <= s; i++){
-            System.out.print(i+" ");
         }
         System.out.println();
-        for(int i = 1; i <= r; i++){
-            System.out.print(i+" ");
-            for(int j = 1; j <= s; j++){
-                if(i == row_num && j == seat_num){
-                    System.out.print("B ");
-                }else{
-                    System.out.print("S ");
-                }
-            }
-            System.out.println();
-        }
+
     }
 
-    static void book(int r, int s){
+    static void book(){
         System.out.print("Enter a row number:\n> ");
         int row_num = sc.nextInt();
         System.out.print("Enter a seat number in that row:\n> ");
         int seat_num = sc.nextInt();
-        //newSeatingPlan(r, s, row_num, seat_num);
+        ticketPrice();
+        if(arr[row_num-1][seat_num-1] == 'B'){
+            System.out.println("That ticket has already been purchased!");
+        }else{
+            arr[row_num-1][seat_num-1] = 'B';
+        }
     }
 
     static void ticket(int r, int s){

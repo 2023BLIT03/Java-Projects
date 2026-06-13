@@ -1,4 +1,5 @@
 ### IntelliJ IDEA ###
+helper.java
 *.iml
 .idea
 out/
