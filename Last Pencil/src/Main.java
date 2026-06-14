@@ -1,10 +1,11 @@
 import java.util.Scanner;
+import java.util.Random;
 
 class Main{
     final static Scanner sc = new Scanner(System.in);
     static int pencil;
     static String name;
-    static int remove = 0;
+    static int move = 0;
 
     static void main(String[] args){
         pencil();
@@ -42,6 +43,7 @@ class Main{
     }
 
     static void show() {
+        Random random = new Random();
         while (pencil > 0) {
             for (int i = 0; i < pencil; i++) {
                 System.out.print("|");
@@ -49,25 +51,37 @@ class Main{
             System.out.println();
             if (name.equals("John")) {
                 System.out.print("John's turn\n> ");
+                if(pencil == 1){
+                    move = 1;
+                }else if(pencil % 4 == 0){
+                    move = 3;
+                }else if(pencil % 4 == 2){
+                    move = 1;
+                }else if(pencil % 4 == 3){
+                    move = 2;
+                }else{
+                    move = random.nextInt(3) + 1;
+                }
+                System.out.println(move);
             } else {
                 System.out.print("Jack's turn\n> ");
-            }
-            if (!sc.hasNextInt()) {
-                System.out.print("Possible values: '1', '2' or '3'\n> ");
-                sc.nextLine();
-                continue;
-            }
-            remove = sc.nextInt();
+                if (!sc.hasNextInt()) {
+                    System.out.print("Possible values: '1', '2' or '3'\n> ");
+                    sc.nextLine();
+                    continue;
+                }
+                move = sc.nextInt();
 
-            if ((remove < 1 || remove > 3)) {
-                System.out.print("Possible values: '1', '2' or '3'\n> ");
-                continue;
+                if ((move < 1 || move > 3)) {
+                    System.out.print("Possible values: '1', '2' or '3'\n> ");
+                    continue;
+                }
+                if (move > pencil) {
+                    System.out.print("Too many pencils were taken\n> ");
+                    continue;
+                }
             }
-            if (remove > pencil) {
-                System.out.print("Too many pencils were taken\n> ");
-                continue;
-            }
-            pencil -= remove;
+            pencil -= move;
             if (name.equals("John")) {
                 name = "Jack";
             } else {
