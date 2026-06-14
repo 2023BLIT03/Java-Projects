@@ -10,9 +10,6 @@ class Main{
         pencil();
         name();
         show();
-
-
-
     }
 
     static void pencil(){
