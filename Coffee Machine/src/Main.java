@@ -12,58 +12,60 @@ class Main{
         int w = 200; //in ml
         int m = 50; // in ml
         int c = 15; // in gm
-        System.out.printf("""
-                The coffee machine has:
-                %d ml of water
-                %d ml of milk
-                %d g of coffee beans
-                %d disposable cups
-                $%d of money
-                """,water, milk, coffee, disposable, income);
-        System.out.println();
-        System.out.print("Write action (buy, fill, take): \n> ");
-        String action = sc.next();
-        switch(action){
-            case "buy":
-                System.out.print("What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino:\n> ");
-                int type = sc.nextInt();
-                switch(type){
-                    case 1:
-                        espresso();
-                        break;
-                    case 2:
-                        latte();
-                        break;
-                    case 3:
-                        cappuccino();
-                        break;
-                    default:
-                        System.out.println("Selection Invalid");
-                }
-                break;
-            case "fill":
-                System.out.print("Write how many ml of water you want to add:\n> ");
-                int add_water = sc.nextInt();
-                water += add_water;
-                System.out.print("Write how many ml of milk you want to add:\n> ");
-                int add_milk = sc.nextInt();
-                milk += add_milk;
-                System.out.print("Write how many grams of coffee beans you want to add:\n> ");
-                int add_coffee = sc.nextInt();
-                coffee += add_coffee;
-                System.out.print("Write how many disposable cups you want to add:\n> ");
-                int add_disposable = sc.nextInt();
-                disposable += add_disposable;
-                break;
-            case "take":
-                System.out.print("I gave you $"+ income +"\n");
-                income -= income;
-                break;
-            default:
-                System.out.println("Selection Invalid");
-        }
-        System.out.println();
-        ingredients();
+
+        String action;
+
+        do {
+            System.out.print("Write action (buy, fill, take, remaining, exit): \n> ");
+            action = sc.next();
+            switch (action) {
+                case "buy":
+                    System.out.print("What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino, back - to main menu:\n> ");
+                    String type = sc.next();
+                    switch (type) {
+                        case "1":
+                            espresso();
+                            break;
+                        case "2":
+                            latte();
+                            break;
+                        case "3":
+                            cappuccino();
+                            break;
+                        case "back":
+                            break;
+                        default:
+                            System.out.println("Selection Invalid");
+                    }
+                    break;
+                case "fill":
+                    System.out.print("Write how many ml of water you want to add:\n> ");
+                    int add_water = sc.nextInt();
+                    water += add_water;
+                    System.out.print("Write how many ml of milk you want to add:\n> ");
+                    int add_milk = sc.nextInt();
+                    milk += add_milk;
+                    System.out.print("Write how many grams of coffee beans you want to add:\n> ");
+                    int add_coffee = sc.nextInt();
+                    coffee += add_coffee;
+                    System.out.print("Write how many disposable cups you want to add:\n> ");
+                    int add_disposable = sc.nextInt();
+                    disposable += add_disposable;
+                    break;
+                case "take":
+                    System.out.print("I gave you $" + income + "\n");
+                    income -= income;
+                    break;
+                case "remaining":
+                    remaining();
+                    break;
+                case "exit":
+                    break;
+                default:
+                    System.out.println("Selection Invalid");
+            }
+            System.out.println();
+        }while(!action.equals("exit"));
     }
 
     static void espresso(){
@@ -71,6 +73,15 @@ class Main{
         coffee -= 16;
         income += 4;
         disposable--;
+        if(water < 0){
+            System.out.println("Sorry, not enough water!");
+        }else if(coffee < 0){
+            System.out.println("Sorry, not enough coffee!");
+        }else if(disposable < 0){
+            System.out.println("Sorry, not enough disposable!");
+        }else{
+            System.out.println("I have enough resources, making you a coffee!");
+        }
     }
 
     static void latte(){
@@ -79,6 +90,17 @@ class Main{
         coffee -= 20;
         income += 7;
         disposable--;
+        if(water < 0){
+            System.out.println("Sorry, not enough water!");
+        }else if(milk < 0){
+            System.out.println("Sorry, not enough milk!");
+        }else if(coffee < 0){
+            System.out.println("Sorry, not enough coffee!");
+        }else if(disposable < 0){
+            System.out.println("Sorry, not enough disposable!");
+        }else{
+            System.out.println("I have enough resources, making you a coffee!");
+        }
     }
 
     static void cappuccino(){
@@ -87,9 +109,20 @@ class Main{
         coffee -= 12;
         income += 6;
         disposable--;
+        if(water < 0){
+            System.out.println("Sorry, not enough water!");
+        }else if(milk < 0){
+            System.out.println("Sorry, not enough milk!");
+        }else if(coffee < 0){
+            System.out.println("Sorry, not enough coffee!");
+        }else if(disposable < 0){
+            System.out.println("Sorry, not enough disposable!");
+        }else{
+            System.out.println("I have enough resources, making you a coffee!");
+        }
     }
 
-    static void ingredients(){
+    static void remaining(){
         System.out.printf("""
                 The coffee machine has:
                 %d ml of water
