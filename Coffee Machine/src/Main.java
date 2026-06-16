@@ -7,17 +7,21 @@ class Main{
     static int coffee = 120;
     static int disposable = 9;
     static int income = 550;
+    static int count = 0;
 
     public static void main(String[] args){
-        int w = 200; //in ml
-        int m = 50; // in ml
-        int c = 15; // in gm
 
-        String action;
+
+        String action = "";
 
         do {
-            System.out.print("Write action (buy, fill, take, remaining, exit): \n> ");
+            System.out.print("Write action (buy, fill, take, clean, remaining, exit): \n> ");
             action = sc.next();
+            if (count >= 2 && !action.equals("clean") && !action.equals("exit")) {
+                System.out.println("I need cleaning!");
+                System.out.println();
+                continue;
+            }
             switch (action) {
                 case "buy":
                     System.out.print("What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino, back - to main menu:\n> ");
@@ -56,6 +60,9 @@ class Main{
                     System.out.print("I gave you $" + income + "\n");
                     income -= income;
                     break;
+                case "clean":
+                    clean();
+                    break;
                 case "remaining":
                     remaining();
                     break;
@@ -69,46 +76,52 @@ class Main{
     }
 
     static void espresso(){
-        water -= 250;
-        coffee -= 16;
-        income += 4;
-        disposable--;
-        if(water < 0){
+        int w = 250; //in ml
+        int m = 50; // in ml
+        int c = 16; // in gm
+        if(water < w){
             System.out.println("Sorry, not enough water!");
-        }else if(coffee < 0){
+        }else if(coffee < c){
             System.out.println("Sorry, not enough coffee!");
-        }else if(disposable < 0){
+        }else if(disposable < 1){
             System.out.println("Sorry, not enough disposable!");
         }else{
             System.out.println("I have enough resources, making you a coffee!");
+            income += 4;
+            count++;
         }
+        water -= 250;
+        coffee -= 16;
+        disposable--;
     }
 
     static void latte(){
+        int w = 350; //in ml
+        int m = 75; // in ml
+        int c = 20; // in gm
+        if(water < 0){
+            System.out.println("Sorry, not enough water!");
+        }else if(milk < 0){
+            System.out.println("Sorry, not enough milk!");
+        }else if(coffee < 0){
+            System.out.println("Sorry, not enough coffee!");
+        }else if(disposable < 0){
+            System.out.println("Sorry, not enough disposable!");
+        }else{
+            System.out.println("I have enough resources, making you a coffee!");
+            income += 7;
+            count++;
+        }
         water -= 350;
         milk -= 75;
         coffee -= 20;
-        income += 7;
         disposable--;
-        if(water < 0){
-            System.out.println("Sorry, not enough water!");
-        }else if(milk < 0){
-            System.out.println("Sorry, not enough milk!");
-        }else if(coffee < 0){
-            System.out.println("Sorry, not enough coffee!");
-        }else if(disposable < 0){
-            System.out.println("Sorry, not enough disposable!");
-        }else{
-            System.out.println("I have enough resources, making you a coffee!");
-        }
     }
 
     static void cappuccino(){
-        water -= 200;
-        milk -= 100;
-        coffee -= 12;
-        income += 6;
-        disposable--;
+        int w = 200; //in ml
+        int m = 100; // in ml
+        int c = 12; // in gm
         if(water < 0){
             System.out.println("Sorry, not enough water!");
         }else if(milk < 0){
@@ -119,7 +132,18 @@ class Main{
             System.out.println("Sorry, not enough disposable!");
         }else{
             System.out.println("I have enough resources, making you a coffee!");
+            income += 6;
+            count++;
         }
+        water -= 200;
+        milk -= 100;
+        coffee -= 12;
+        disposable--;
+    }
+
+    static void clean(){
+        count = 0;
+        System.out.println("I have been cleaned!");
     }
 
     static void remaining(){
@@ -130,6 +154,7 @@ class Main{
                 %d g of coffee beans
                 %d disposable cups
                 $%d of money
-                """,water, milk, coffee, disposable, income);
+                %d
+                """,water, milk, coffee, disposable, income, count);
     }
 }
