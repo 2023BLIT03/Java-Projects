@@ -7,15 +7,19 @@ class Main{
     static String code = "9305";
     static String str = "";
     static char[] arr;
+    static long pseudoRandomNumber = System.nanoTime();
 
 
     public static void main(){
         System.out.print(">");
-        str = sc.next();
-        arr = str.toCharArray();
-        isBull();
-        isCow();
-        print();
+        //str = sc.next();
+        //arr = str.toCharArray();
+
+        if(pseudoRandomNumber.)
+        System.out.println(pseudoRandomNumber);
+        //isBull();
+        //isCow();
+        //print();
     }
     static void isBull(){
         for(int i=0; i < code.length(); i++) {
