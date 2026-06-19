@@ -8,15 +8,40 @@ class Main{
     static String str = "";
     static char[] arr;
     static long pseudoRandomNumber = System.nanoTime();
+    static String num =  "" + pseudoRandomNumber;
 
 
     public static void main(){
+        StringBuilder sb = new StringBuilder();
         System.out.print(">");
         //str = sc.next();
         //arr = str.toCharArray();
+        String rev = "";
+        int len = sc.nextInt();
+        if(len > 10){
+            System.out.printf("Error: can't generate a secret number with a length of %d because there aren't enough unique digits.\n", len);
+            return;
+        }
+        String secret = "";
 
-        if(pseudoRandomNumber.)
-        System.out.println(pseudoRandomNumber);
+        while(secret.length() < len){
+            for(int i=num.length()-1; i >= 0; i--){
+                char digit = num.charAt(i);
+
+                if(secret.indexOf(digit) == -1){
+                    if(secret.isEmpty() && digit == '0'){
+                        continue;
+                    }
+                    secret += digit;
+                }
+                if(secret.length() == len){
+                    break;
+                }
+            }
+        }
+
+        System.out.printf("The random secret number is %s.\n", secret);
+
         //isBull();
         //isCow();
         //print();
@@ -49,4 +74,5 @@ class Main{
             System.out.printf("None. The secret code is %s.\n", code);
         }
     }
+
 }
