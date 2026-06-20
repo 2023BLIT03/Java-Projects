@@ -2,62 +2,83 @@ import java.util.Scanner;
 
 class Main{
     final static Scanner sc = new Scanner (System.in);
-    static int bull = 0;
-    static int cow = 0;
-    static String code = "9305";
+    static int bull;
+    static int cow;
     static String str = "";
     static char[] arr;
-    static long pseudoRandomNumber = System.nanoTime();
-    static String num =  "" + pseudoRandomNumber;
+    static long pseudoRandomNumber;
+    static String num;
+    static StringBuilder secret = new StringBuilder();
 
 
-    public static void main(){
-        StringBuilder sb = new StringBuilder();
+    public static void main(String[] args){
+
+        run();
+
+
+    }
+
+    static void run(){
+        int turn = 1;
+        System.out.println("Please, enter the secret code's length:");
         System.out.print(">");
-        //str = sc.next();
-        //arr = str.toCharArray();
-        String rev = "";
         int len = sc.nextInt();
+        generateSecretCode(len);
+        System.out.println("Okay, let's start a game!");
+        do {
+            bull = 0;
+            cow = 0;
+            System.out.printf("Turn %d:\n> ", turn);
+            turn++;
+            str = sc.next();
+            arr = str.toCharArray();
+            isBull();
+            isCow();
+            print();
+
+        }while(!secret.toString().equals(str));
+        System.out.print("Congratulations! You guessed the secret code.");
+    }
+
+    static void generateSecretCode(int len){
+
         if(len > 10){
             System.out.printf("Error: can't generate a secret number with a length of %d because there aren't enough unique digits.\n", len);
             return;
         }
-        String secret = "";
 
         while(secret.length() < len){
+            pseudoRandomNumber = System.nanoTime();
+            num =  "" + pseudoRandomNumber;
+
             for(int i=num.length()-1; i >= 0; i--){
                 char digit = num.charAt(i);
 
-                if(secret.indexOf(digit) == -1){
+                if(secret.indexOf(String.valueOf(digit)) == -1){
                     if(secret.isEmpty() && digit == '0'){
                         continue;
                     }
-                    secret += digit;
+                    secret.append(digit);
                 }
                 if(secret.length() == len){
                     break;
                 }
             }
         }
-
-        System.out.printf("The random secret number is %s.\n", secret);
-
-        //isBull();
-        //isCow();
-        //print();
     }
+
     static void isBull(){
-        for(int i=0; i < code.length(); i++) {
-            if (code.charAt(i) == (arr[i])) {
+        for(int i=0; i < secret.length(); i++) {
+            if (secret.charAt(i) == (arr[i])) {
                 bull++;
             }
         }
     }
 
     static void isCow(){
-        for(int i=0; i < code.length(); i++){
-            for(int j=0; j < code.length(); j++){
-                if(i != j && code.charAt(i) == (arr[j]) && code.charAt(i) != (arr[i])){
+        for(int i=0; i < secret.length(); i++){
+            for(int j=0; j < secret.length(); j++){
+                if(i != j && secret.charAt(i) == (arr[j]) && secret.charAt(i) != (arr[i])){
                     cow++;
                 }
             }
@@ -65,14 +86,13 @@ class Main{
     }
     static void print(){
         if(bull>0 && cow>0){
-            System.out.printf("Grade: %d bull(s) and %d cow(s). The secret code is %s.\n", bull, cow, code);
+            System.out.printf("Grade: %d bull(s) and %d cow(s).\n", bull, cow);
         }else if(bull>0){
-            System.out.printf("Grade: %d bull(s). The secret code is %s.\n", bull, code);
+            System.out.printf("Grade: %d bull(s).\n", bull);
         }else if(cow>0){
-            System.out.printf("Grade: %d cow(s). The secret code is %s.\n", cow, code);
-        }else{
-            System.out.printf("None. The secret code is %s.\n", code);
+            System.out.printf("Grade: %d cow(s).\n", cow);
+        }else {
+            System.out.println("Grade: None.");
         }
     }
-
 }
