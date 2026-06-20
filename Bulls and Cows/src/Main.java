@@ -1,7 +1,9 @@
 import java.util.Scanner;
+import java.util.Random;
 
 class Main{
     final static Scanner sc = new Scanner (System.in);
+    static Random random = new Random();
     static int bull;
     static int cow;
     static String str = "";
@@ -48,7 +50,7 @@ class Main{
         }
 
         while(secret.length() < len){
-            pseudoRandomNumber = System.nanoTime();
+            pseudoRandomNumber = random.nextLong();
             num =  "" + pseudoRandomNumber;
 
             for(int i=num.length()-1; i >= 0; i--){
