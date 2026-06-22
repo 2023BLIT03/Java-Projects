@@ -9,12 +9,11 @@ class Converter{
     final static Scanner sc = new Scanner(System.in);
 
     static void input(){
-        Scanner sc = new Scanner(System.in);
         System.out.print("Input string:\n> ");
         String str = sc.nextLine();
         System.out.println();
         System.out.println("The result:");
-        encrypt(str);
+        decrypt(str);
     }
 
     static void encrypt(String str){
@@ -43,6 +42,26 @@ class Converter{
                 System.out.print("00 ");
             }
              System.out.print("0".repeat(count) + " ");
+        }
+    }
+    static void decrypt(String str){
+        String[] arr = str.split(" ");
+        StringBuilder binary = new StringBuilder();
+
+        for(int i = 0; i < arr.length; i+=2){
+            String prefix = arr[i];
+            String zeros = arr[i + 1];
+
+            char bit = prefix.equals("0") ? '1' : '0';
+
+            for(int j = 0; j < zeros.length(); j++){
+                binary.append(bit);
+            }
+        }
+        for(int i = 0; i < binary.length(); i += 7){
+            String chunk = binary.substring(i, i + 7);
+            int ascii = Integer.parseInt(chunk, 2);
+            System.out.print((char)ascii);
         }
     }
 }
