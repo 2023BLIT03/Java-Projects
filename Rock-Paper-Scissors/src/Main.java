@@ -13,6 +13,7 @@ public class Main{
         String option;
         do{
             IO.print(">");
+            //ystem.out.println();
             option = sc.next();
             switch(option){
                 case "rock":
